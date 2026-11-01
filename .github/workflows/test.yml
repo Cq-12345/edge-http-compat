@@ -5,13 +5,19 @@ on:
 permissions:
   contents: read
 jobs:
-  test:
+  windows-powershell:
+    name: Windows PowerShell 5.1
     runs-on: windows-latest
-    strategy:
-      matrix:
-        shell: [powershell, pwsh]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Test registry sandbox and CLI
-        shell: ${{ matrix.shell }}
+        shell: powershell
+        run: ./tests/Run-Tests.ps1
+  powershell-7:
+    name: PowerShell 7
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Test registry sandbox and CLI
+        shell: pwsh
         run: ./tests/Run-Tests.ps1

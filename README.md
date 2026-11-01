@@ -5,7 +5,7 @@
 
 **让仍需使用 HTTP 的网站与新版 Microsoft Edge 共存。** 使用微软正式支持的浏览器策略，提供只读诊断、关闭自动 HTTPS 升级、指定网站例外、备份和撤销。
 
-[English](README.en.md) · [版本要求](#版本要求与验证范围) · [快速使用](#快速使用默认正式版-edge) · [Beta / Dev / Canary](#beta-dev-canary-怎么用) · [故障排查](#修改后仍然有问题)
+[English](README.en.md) · [版本要求](#compatibility) · [快速使用](#quickstart) · [Beta / Dev / Canary](#channels) · [故障排查](#troubleshooting)
 
 适合这样的情况：输入某个域名后 Edge 尝试访问 `https://`，该网站连接失败，而同一网站的 `http://` 可以正常打开。脚本处理的是**浏览器自动升级协议的配置**，不能修复网站服务器、DNS、代理或所有 HTTPS 错误。
 
@@ -21,6 +21,8 @@
 如果只有少数旧网站有问题，可选 `AllowHttp`，其他网站继续使用默认自动升级行为。确实需要全局关闭自动升级时，选 `DisableUpgrade`。两种操作都不会把已经明确使用 HTTPS 的链接统一改成 HTTP，也不会关闭证书校验。
 
 **默认检测的是正式版 Edge（Stable），不是 Beta。默认运行只读，不会自动修改设置或请求管理员权限。**
+
+<a id="compatibility"></a>
 
 ## 版本要求与验证范围
 
@@ -47,6 +49,8 @@
 - CI 在 Windows 上分别运行 PowerShell 5.1 与 7，验证脚本行为，不会替代各种 Edge 版本的实机兼容性验证。
 
 旧版遇到问题时，应先依据组织政策升级到受支持版本，或在 ≥ 123 的版本使用指定网站例外。脚本不会因为机器同时安装了 Beta，就悄悄把默认检测对象从正式版换成 Beta。
+
+<a id="quickstart"></a>
 
 ## 快速使用：默认正式版 Edge
 
@@ -115,6 +119,8 @@ powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\EdgeHttpCompat.p
 | `*`、`[*]` | 拒绝：微软不允许用它们匹配所有网站 |
 
 如果要关闭所有自动升级，请使用 `DisableUpgrade`，不要尝试用通配符伪造全局例外。`HttpAllowlist` 不覆盖 HSTS，见后面的原理和排查说明。
+
+<a id="channels"></a>
 
 ## Beta / Dev / Canary 怎么用
 
@@ -252,6 +258,8 @@ powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\EdgeHttpCompat.p
 5. 按原来的方式输入域名，再检查地址栏最终协议及页面是否加载。需要时在开发者工具 Network 中启用 Preserve log 观察请求链。
 
 只有把浏览器实际策略和目标页面结果都验证了，才能判断这台电脑上的问题已解决。`Status` 返回退出码 0 只表示诊断完成，不表示网站一定可访问。
+
+<a id="troubleshooting"></a>
 
 ## 修改后仍然有问题
 
