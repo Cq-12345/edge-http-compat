@@ -1,0 +1,13 @@
+# Never publish browser profiles, diagnostics, or per-user restore data.
+.test-artifacts/
+backups/
+diagnostics/
+work/
+*.log
+*.reg
+*netlog*.json
+network-*.json
+edge-http-*.json
+*.zip
+.DS_Store
+Thumbs.db
